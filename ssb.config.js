@@ -75,10 +75,6 @@ module.exports = function () {
     }
   )
 
-  if (!env.isProduction) {
-    console.log(`\x1b[37m\x1b[41m NODE_ENV \x1b[31m\x1b[47m ${env.name} \x1b[0m\n`)
-  }
-
   return config
 }
 

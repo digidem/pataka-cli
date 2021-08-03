@@ -47,8 +47,9 @@ module.exports = function startPataka () {
 
 function printConfig (server) {
   const { config, id } = server
+  const envName = env.isProduction ? '' : ` ${env.name.toUpperCase()} `
 
-  const configTxt = chalk`{blue PATAKA}
+  const configTxt = chalk`{blue PATAKA} {white.bgRed ${envName}}
 
 {bold host}    ${config.pataka.host || config.host}
 {bold port}    ${config.port}

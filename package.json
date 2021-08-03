@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node bin/pataka.js",
+    "dev": "NODE_ENV=development npm start",
     "syncDeps": "node scripts/sync-deps.js"
   },
   "bin": {
