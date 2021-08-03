@@ -69,4 +69,8 @@ to start in development pataka env:
 $ npm run dev
 ```
 
-
+To update the dependencies to be in line with `pataka`
+```bash
+$ npm link pataka
+$ npm run syncDeps
+```
