@@ -16,6 +16,7 @@ You will then see logged out:
 - `data` : path to where data is being stored for this instance 
 - `config` : path to where you can persist custom config
 
+To use this in the cloud, you might like to launch it with a tool like: [pm2](https://www.npmjs.com/package/pm2)
 
 ## Config
 
