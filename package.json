@@ -1,6 +1,6 @@
 {
   "name": "pataka-cli",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "command line tool for running a pataka instance",
   "main": "index.js",
   "scripts": {
