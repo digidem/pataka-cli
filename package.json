@@ -1,0 +1,51 @@
+{
+  "name": "pataka-cli",
+  "version": "0.0.1",
+  "description": "command line tool for running a pataka instance",
+  "main": "index.js",
+  "scripts": {
+    "start": "node bin/pataka.js",
+    "syncDeps": "node scripts/sync-deps.js"
+  },
+  "bin": {
+    "pataka": "bin/pataka.js"
+  },
+  "dependencies": {
+    "ahau-env": "^3.0.0",
+    "boxen": "^5.0.1",
+    "chalk": "^4.1.2",
+    "env-paths": "^2.2.1",
+    "lodash.merge": "^4.6.2",
+    "secret-stack": "^6.4.0",
+    "ssb-backlinks": "^2.1.1",
+    "ssb-blobs": "^2.0.0",
+    "ssb-config": "^3.4.5",
+    "ssb-conn": "^1.0.0",
+    "ssb-db": "^20.3.0",
+    "ssb-friends": "~4.2.1",
+    "ssb-hyper-blobs": "^2.1.1",
+    "ssb-invite": "^2.1.7",
+    "ssb-lan": "^1.0.0",
+    "ssb-profile": "^3.1.0",
+    "ssb-query": "^2.4.5",
+    "ssb-recps-guard": "^2.1.0",
+    "ssb-replicate": "^1.3.3",
+    "ssb-settings": "^1.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/ahau/pataka-cli.git"
+  },
+  "keywords": [
+    "ahau",
+    "pataka",
+    "cli",
+    "scuttlebutt"
+  ],
+  "author": "mixmix",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://gitlab.com/ahau/pataka-cli/issues"
+  },
+  "homepage": "https://gitlab.com/ahau/pataka-cli#readme"
+}
