@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 
 const chalk = require('chalk')
-const startServer = require('../')
-const ssb = startServer()
+const startSSB = require('../')
+const startExpress = require('../express')
 
-const { PATAKA_LOG, PATAKA_INVITE_USES } = process.env
+const { PATAKA_LOG, PATAKA_INVITE_USES, PATAKA_WEB_PORT } = process.env
+
+const ssb = startSSB()
+startExpress(PATAKA_WEB_PORT || 3000)
 
 if (PATAKA_LOG) {
   console.log(chalk`{blue logging started...}`)

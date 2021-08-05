@@ -21,7 +21,7 @@ module.exports = function startPataka () {
     .use(require('ssb-friends'))
 
     .use(require('ssb-blobs'))
-    // .use(require('ssb-serve-blobs'))
+    .use(require('ssb-serve-blobs'))
     .use(require('ssb-hyper-blobs'))
 
     .use(require('ssb-query'))
@@ -35,7 +35,7 @@ module.exports = function startPataka () {
 
     .use(require('ssb-invite'))
     // .use(require('ssb-tribes')) // disable attempting decryption
-    // .use(require('ssb-pataka'))
+    .use(require('ssb-pataka'))
     .use(require('ssb-recps-guard'))
 
   const config = Config()

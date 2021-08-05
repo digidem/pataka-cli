@@ -35,6 +35,7 @@ Here's en example config (note all fields are optional)
 You can also use ENV VAR (these will over-ride the config file):
 - `PORT` (default: 8088)
 - `PATAKA_HOST`
+- `PATAKA_WEB_PORT` (default: 3000)
 - `PATAKA_LOG` controls logging, set to `true` to enable
 - `PATAKA_INVITE_USES`
     - the pataka creates an invite code each time it's started, this specifies how many uses that code is valid for
@@ -43,18 +44,28 @@ You can also use ENV VAR (these will over-ride the config file):
 NOTE: it's currently not only possible to set the local port the patkaka listens on - you cannot set the external port the invite code will use
 If this external port is different you can manually edit the port invite code.
 
+## :warning: WARNING
+
+This module currently exposes an admin web page **without authentication**. It allows:
+- setting the name of the pataka
+- generating single-use invites for the pataka
+
 ## TODO
 
-There's an annoying error logged on startup.
-It's safe to ignore but looks scary, it needs tidying up
+0. Add Authentication
+1. find a way to not commit the raw `public/` folder
+2. Make it so you can upload profile images (may be broken atm?)
+3. There's an annoying error logged on startup.
+    It's safe to ignore but looks scary, it needs tidying up
 
-```
-Trace: deprecated api used: ssb-ref.parseAddress
-    at Object.parseAddress (/home/username/.nvm/versions/node/v14.16.0/lib/node_modules/pataka-cli/node_modules/ssb-ref/index.js:99:15)
-    at Object.<anonymous> (/home/username/.nvm/versions/node/v14.16.0/lib/node_modules/pataka-cli/node_modules/ssb-invite/index.js:97:24)
-    at apply (/home/username/.nvm/versions/node/v14.16.0/lib/node_modules/pataka-cli/node_modules/muxrpc-validation/index.js:197:15)
-    ...
-```
+    ```
+    Trace: deprecated api used: ssb-ref.parseAddress
+        at Object.parseAddress (/home/username/.nvm/versions/node/v14.16.0/lib/node_modules/pataka-cli/node_modules/ssb-ref/index.js:99:15)
+        at Object.<anonymous> (/home/username/.nvm/versions/node/v14.16.0/lib/node_modules/pataka-cli/node_modules/ssb-invite/index.js:97:24)
+        at apply (/home/username/.nvm/versions/node/v14.16.0/lib/node_modules/pataka-cli/node_modules/muxrpc-validation/index.js:197:15)
+        ...
+    ```
+
 
 ### Development
 
