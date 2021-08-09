@@ -10,6 +10,7 @@ const appPath = envPaths(env.pataka.appName, { suffix: '' }).data
 const configPath = path.join(appPath, 'config')
 
 const core = {
+  password: 'admin',
   path: appPath,
   port: env.pataka.port,
   pataka: {
