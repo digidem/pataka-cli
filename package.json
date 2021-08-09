@@ -34,7 +34,8 @@
     "ssb-recps-guard": "^2.1.0",
     "ssb-replicate": "^1.3.3",
     "ssb-serve-blobs": "^2.6.0",
-    "ssb-settings": "^1.1.4"
+    "ssb-settings": "^1.1.4",
+    "ssb-tribes": "github:ssbc/ssb-tribes#master"
   },
   "repository": {
     "type": "git",
