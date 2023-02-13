@@ -2,6 +2,7 @@ const path = require('path')
 const env = require('ahau-env')()
 const chalk = require('chalk')
 const boxen = require('boxen')
+
 const Config = require('./ssb.config')
 const karakia = require('./karakia')
 
@@ -35,8 +36,8 @@ module.exports = function startPataka () {
 
     .use(require('ssb-invite'))
     .use(require('ssb-tribes')) // disable attempting decryption
-    .use(require('ssb-pataka'))
     .use(require('ssb-recps-guard'))
+    .use(require('ssb-pataka'))
 
   const config = Config()
   const server = stack(config)

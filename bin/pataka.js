@@ -14,6 +14,10 @@ if (PATAKA_LOG) {
   ssb.post(m => console.log(m.value.author, m.value.sequence))
 }
 
+/* auto-create a massive invite */
+// outputs to terminal
+// runs on each startup
+
 const inviteDetails = {
   uses: PATAKA_INVITE_USES || 1000,
   external: ssb.config.pataka.host || ssb.config.host,
