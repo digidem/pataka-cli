@@ -1,11 +1,10 @@
-const path = require('path')
 const env = require('ahau-env')()
-const chalk = require('chalk')
-const boxen = require('boxen')
+
 const Config = require('./ssb.config')
 const karakia = require('./karakia')
+const noop = () => {}
 
-module.exports = function startPataka () {
+module.exports = function startPataka (opts) {
   /* Karakia tūwhera */
   karakia()
 
@@ -34,33 +33,26 @@ module.exports = function startPataka () {
     // .use(require('ssb-whakapapa'))
 
     .use(require('ssb-invite'))
-    .use(require('ssb-tribes')) // disable attempting decryption
-    .use(require('ssb-pataka'))
-    .use(require('ssb-recps-guard'))
 
-  const config = Config()
+    // HACK 2023-03-13 (mix) - we don't want ssb-tribes installing boxers/ unboxers
+    // as this slows down the pataka. We do want some of the tribes APIs for graphql
+    // queries
+    .use({
+      ...require('ssb-tribes'),
+      init: (ssb, config) => {
+        const _ssb = {
+          ...ssb,
+          addBoxer: noop,
+          addUnboxer: noop
+        }
+        return require('ssb-tribes').init(_ssb, config)
+      }
+    })
+    .use(require('ssb-recps-guard'))
+    .use(require('ssb-pataka'))
+
+  const config = Config(opts)
   const server = stack(config)
 
-  printConfig(server)
   return server
-}
-
-function printConfig (server) {
-  const { config, id } = server
-  const envName = env.isProduction ? '' : ` ${env.name.toUpperCase()} `
-
-  const configTxt = chalk`{blue PATAKA} {white.bgRed ${envName}}
-
-{bold host}    ${config.pataka.host || config.host}
-{bold port}    ${config.port}
-{bold feedId}  ${id}
-{bold data}    ${config.path}
-{bold config}  ${path.join(config.path, 'config')}`
-
-  console.log(boxen(configTxt, {
-    padding: 1,
-    margin: 1,
-    borderStyle: 'round',
-    borderColor: 'blue'
-  }))
 }

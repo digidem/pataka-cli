@@ -60,13 +60,13 @@ const cliConfig = prune({
 
 let config = null
 
-module.exports = function () {
+module.exports = function (opts = {}) {
   if (config) return config
 
   const persisted = loadPersisted(configPath)
   if (!persisted.mixpanelId) persisted.mixpanelId = generateId()
 
-  config = Config(env.pataka.appName, merge({}, core, persisted, cliConfig))
+  config = Config(env.pataka.appName, merge({}, core, persisted, opts, cliConfig))
 
   // write a copy of customConfig to configPath so that:
   // - we can persist our unique mixpanel ID for anonymous analytics
