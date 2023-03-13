@@ -83,6 +83,16 @@ $ npm run dev
 
 To update the dependencies to be in line with `pataka`
 ```bash
+$ cd ~/projects/pataka
 $ npm link pataka
+$ cd ~/projects/pataka-cli
 $ npm run syncDeps
 ```
+
+To update the UI to be in line with `pataka`
+```bash
+$ cd ~/projects/pataka/ui
+$ npm run build
+$ cp -R ../dist ~/projects/pataka-cli/public
+```
+
