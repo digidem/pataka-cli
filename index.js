@@ -35,7 +35,7 @@ module.exports = function startPataka () {
     // .use(require('ssb-whakapapa'))
 
     .use(require('ssb-invite'))
-    .use(require('ssb-tribes')) // disable attempting decryption
+    // .use(require('ssb-tribes')) // disable attempting decryption
     .use(require('ssb-recps-guard'))
     .use(require('ssb-pataka'))
 

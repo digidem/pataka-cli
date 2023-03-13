@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-// NOTE! assumes you have npm linked patkaka repo!
+// NOTE! assumes you have npm linked pataka repo!
 const pataka = require('pataka/package.json')
 const patakaCli = require('../package.json')
 
