@@ -1,6 +1,6 @@
 {
   "name": "pataka-cli",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "command line tool for running a pataka instance",
   "main": "index.js",
   "scripts": {
@@ -38,7 +38,7 @@
     "ssb-settings": "^1.1.4",
     "ssb-tribes": "^3.1.2"
   },
-  "engines" : {
+  "engines": {
     "node": ">=18"
   },
   "repository": {
