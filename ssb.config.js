@@ -45,7 +45,8 @@ const core = {
   },
   recpsGuard: {
     allowedTypes: [
-      'contact' // needed for ssb-invite
+      'contact', // needed for ssb-invite
+      'profile/pataka'
     ]
   }
 }
