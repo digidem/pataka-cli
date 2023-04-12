@@ -10,8 +10,9 @@ $ pataka
 ```
 
 You will then see logged out:
+- `web ui` : the urls that the web ui can be accessed at
 - `host` : the hostname your pataka will be connected to over (you generally want this to be accessible on the internet)
-- `port` : the local port your pataka will be listening on
+- `port` : the local port your pataka scuttelbutt instance will be listening on
 - `feedId` : the unique scuttlebutt id of this pataka (for debugging)
 - `data` : path to where data is being stored for this instance 
 - `config` : path to where you can persist custom config
@@ -25,9 +26,12 @@ Here's en example config (note all fields are optional)
 
 ```json
 {
-  "port": "8068",
+  "port": 8068,
   "pataka": {
-    "host": "mydomain.nz"
+    "host": "mydomain.nz",
+    "webPort": 6700,
+    "inviteUses": 10,
+    "log": false
   }
 }
 ```
@@ -36,6 +40,7 @@ You can also use ENV VAR (these will over-ride the config file):
 - `PORT` (default: 8088)
 - `PATAKA_HOST`
 - `PATAKA_WEB_PORT` (default: 3000)
+    - NOTE note sure port 80 will be will handled
 - `PATAKA_LOG` controls logging, set to `true` to enable
 - `PATAKA_INVITE_USES`
     - the pataka creates an invite code each time it's started, this specifies how many uses that code is valid for

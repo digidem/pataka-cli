@@ -8,35 +8,27 @@ const boxen = require('boxen')
 const startSSB = require('../')
 const startExpress = require('../express')
 
-const { PATAKA_LOG, PATAKA_INVITE_USES, PATAKA_WEB_PORT } = process.env
-const webPort = PATAKA_WEB_PORT || 3000
-
 function start () {
-  const ssb = startSSB({
-    pataka: {
-      allowedOrigins: [
-        `http://localhost:${webPort}`
-      ]
-    }
-  })
-  startExpress(webPort)
-  createInvite(ssb, PATAKA_INVITE_USES)
+  const ssb = startSSB()
+  startExpress(ssb.config.pataka.webPort)
+
+  createInvite(ssb)
 
   printConfig(ssb)
 
-  if (PATAKA_LOG) {
+  if (ssb.config.pataka.log) {
     console.log(chalk`{blue logging started...}`)
     ssb.post(m => console.log(m.value.author, m.value.sequence))
   }
 }
 start()
 
-function createInvite (ssb, uses = 1000) {
+function createInvite (ssb) {
   /* auto-create a massive invite */
   // outputs to terminal
   // runs on each startup
   const inviteDetails = {
-    uses,
+    uses: ssb.config.pataka.inviteUses,
     external: ssb.config.pataka.host || ssb.config.host,
     modern: false
   }
@@ -58,7 +50,8 @@ function printConfig (ssb) {
 
   const configTxt = chalk`{blue PATAKA} {white.bgRed ${envName}}
 
-{bold web ui}  http://localhost:${webPort}
+{bold web ui}  ${config.pataka.allowedOrigins.join(', ')}
+
 {bold host}    ${config.pataka.host || config.host}
 {bold port}    ${config.port}
 {bold feedId}  ${id}

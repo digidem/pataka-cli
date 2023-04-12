@@ -9,12 +9,16 @@ const merge = require('lodash.merge')
 const appPath = envPaths(env.pataka.appName, { suffix: '' }).data
 const configPath = path.join(appPath, 'config')
 
+const { PATAKA_LOG, PATAKA_HOST, PATAKA_INVITE_USES, PATAKA_WEB_PORT } = process.env
+
 const core = {
   path: appPath,
-  port: env.pataka.port,
+  port: Number(process.env.PORT) || env.pataka.port, // ssb port
   pataka: {
-    // host - external host for pataka invites
-    // port - TODO
+    host: PATAKA_HOST || 'localhost',
+    webPort: Number(PATAKA_WEB_PORT) || 3000,
+    log: Boolean(PATAKA_LOG),
+    inviteUses: Number(PATAKA_INVITE_USES) || 1000
   },
   graphql: {
     corsOpen: true
@@ -51,32 +55,30 @@ const core = {
   }
 }
 
-const cliConfig = prune({
-  port: process.env.PORT,
-  pataka: {
-    host: process.env.PATAKA_HOST
-    // port: process.env.PATAKA_PORT - TODO
-  }
-})
-
 let config = null
 
 module.exports = function (opts = {}) {
   if (config) return config
 
   const persisted = loadPersisted(configPath)
-  if (!persisted.mixpanelId) persisted.mixpanelId = generateId()
+  if (!persisted.mixpanelId) {
+    persisted.mixpanelId = generateId()
+    // write a copy of customConfig to configPath so that:
+    // - we can persist our unique mixpanel ID for anonymous analytics
+    fs.writeFileSync(
+      configPath,
+      JSON.stringify(persisted, null, 2),
+      (err) => {
+        if (err) throw err
+      }
+    )
+  }
 
-  config = Config(env.pataka.appName, merge({}, core, persisted, opts, cliConfig))
+  config = Config(env.pataka.appName, merge({}, core, persisted, opts))
 
-  // write a copy of customConfig to configPath so that:
-  // - we can persist our unique mixpanel ID for anonymous analytics
-  fs.writeFileSync(
-    configPath,
-    JSON.stringify(persisted, null, 2),
-    (err) => {
-      if (err) throw err
-    }
+  config.pataka.allowedOrigins ||= unique(
+    `http://${config.pataka.host}:${config.pataka.webPort}`,
+    `http://localhost:${config.pataka.webPort}`
   )
 
   return config
@@ -98,16 +100,6 @@ function generateId () {
   return crypto.randomBytes(32).toString('base64')
 }
 
-function prune (obj) {
-  Object.entries(obj).forEach(([key, value]) => {
-    if (value === undefined) delete obj[key]
-    if (isObject(value)) prune(value)
-  })
-}
-function isObject (obj) {
-  return (
-    typeof obj === 'object' &&
-    obj !== null &&
-    !Array.isArray(obj)
-  )
+function unique (...arr) {
+  return Array.from(new Set(arr))
 }
