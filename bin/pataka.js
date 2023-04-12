@@ -7,6 +7,7 @@ const boxen = require('boxen')
 
 const startSSB = require('../')
 const startExpress = require('../express')
+const { version } = require('../package.json')
 
 function start () {
   const ssb = startSSB()
@@ -48,7 +49,7 @@ function printConfig (ssb) {
   const { config, id } = ssb
   const envName = env.isProduction ? '' : ` ${env.name.toUpperCase()} `
 
-  const configTxt = chalk`{blue PATAKA} {white.bgRed ${envName}}
+  const configTxt = chalk`{blue PATAKA} {white.bgRed ${envName}} v${version}
 
 {bold web ui}  ${config.pataka.allowedOrigins.join(', ')}
 
