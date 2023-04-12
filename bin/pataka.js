@@ -46,19 +46,20 @@ function createInvite (ssb) {
 }
 
 function printConfig (ssb) {
-  const { config, id } = ssb
+  const { config } = ssb
   const envName = env.isProduction ? '' : ` ${env.name.toUpperCase()} `
 
   const configTxt = chalk`{blue PATAKA} {white.bgRed ${envName}} v${version}
 
-{bold web ui}  ${config.pataka.allowedOrigins.join(', ')}
+{bold feedId}  ${config.keys.id}
+{bold network}
+    ├── host  ${config.pataka.host || config.host}
+    ├── port  ${config.port}
+    └── api   http://${config.pataka.host}:${config.graphql.port}/graphql
 
-{bold host}    ${config.pataka.host || config.host}
-{bold port}    ${config.port}
-{bold feedId}  ${id}
+{bold config}  ${path.join(config.path, 'config')}
 
-{bold data}    ${config.path}
-{bold config}  ${path.join(config.path, 'config')}`
+{bold web ui}  ${config.pataka.allowedOrigins.join('\n        ')}`
 
   console.log(boxen(configTxt, {
     padding: 1,
