@@ -21,7 +21,8 @@ const core = {
     inviteUses: Number(PATAKA_INVITE_USES) || 1000
   },
   graphql: {
-    corsOpen: true
+    corsOpen: true,
+    port: env.pataka.graphql.port
   },
   allowPrivate: true, // used for making local invite codes
   // HACK: There is a problem with ssb-invite where it look for a public incoming connection in the config which does not exist
