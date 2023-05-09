@@ -15,6 +15,8 @@ RUN npm install
 # Bundle app source
 COPY . .
 
+# Expose Pataka ports
+# https://gitlab.com/ahau/lib/ahau-env/-/blob/master/index.js#L108-121
 EXPOSE 3000
 EXPOSE 8088
 EXPOSE 18088
