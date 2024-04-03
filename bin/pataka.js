@@ -11,13 +11,13 @@ const { version } = require('../package.json')
 
 function start () {
   const ssb = startSSB()
-  startExpress(ssb.config.pataka.webPort)
+  startExpress(ssb.config.pataka?.webPort)
 
   createInvite(ssb)
 
   printConfig(ssb)
 
-  if (ssb.config.pataka.log) {
+  if (ssb.config.pataka?.log) {
     console.log(chalk`{blue logging started...}`)
     ssb.post(m => console.log(m.value.author, m.value.sequence))
   }
