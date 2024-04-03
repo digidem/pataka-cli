@@ -1,30 +1,45 @@
+const clone = require('lodash.clone')
 const fs = require('fs')
 const path = require('path')
-// NOTE! assumes you have npm linked pataka repo!
-const pataka = require('pataka/package.json')
-const patakaCli = require('../package.json')
 
-let needsInstall = false
+const patakaPkg = require('../../pataka/package.json')
+// assumes this pataka + patkaka-cli in a folder next to each other
+const patakaCliPkg = require('../package.json')
 
-console.log('Syncing dependencies with pataka:')
-Object.entries(patakaCli.dependencies).forEach(([name, version]) => {
-  if (pataka.dependencies[name] && pataka.dependencies[name] !== version) {
-    console.log(`  ${name}: ${version} > ${pataka.dependencies[name]}`)
-    patakaCli.dependencies[name] = pataka.dependencies[name]
-    needsInstall = true
-  }
-})
+const newPatakaPkg = clone(patakaCliPkg)
 
-if (needsInstall) {
-  fs.writeFile(path.join(__dirname, '..', 'package.json'), JSON.stringify(patakaCli, null, 2), (err) => {
-    if (err) {
-      console.error(' failed to write package.json updates!')
-      console.log(err)
-      return
-    }
+const ignore = new Set([
+  'ssb-ahoy'
+])
 
-    console.log('\n  ✓ DONE!')
-    console.log('  please run `npm install` to install updates\n')
+Object.entries(patakaPkg.dependencies)
+  .filter(([key, value]) => {
+    if (ignore.has(key))
+    if (key === 'secret-stack') return true
+    if (key.startsWith('ssb') && !ignore.has(key)) return true
+    if (key.startsWith('ahau')) return true
+
+    console.log(' ✗', key)
+    return false
   })
-} // eslint-disable-line
-else console.log('  ✓ no updates needed\n')
+  .forEach(([key, value]) => {
+    log(key, newPatakaPkg.dependencies[key], value)
+    newPatakaPkg.dependencies[key] = value
+  })
+
+fs.writeFileSync(
+  path.join(__dirname, '../package.json'),
+  JSON.stringify(newPatakaPkg, null, 2)
+)
+
+console.log(' DONE')
+console.log(' Remember to npm install')
+
+function log (key, oldValue, newValue) {
+  if (oldValue === newValue) console.log(green(' ✓'), key)
+  else console.log(green(' ✓'), key, oldValue, '⇒', green(newValue))
+}
+
+function green (string) {
+  return `\x1b[32m${string}\x1b[0m`
+}
