@@ -49,11 +49,15 @@ You can also use ENV VAR (these will over-ride the config file):
 NOTE: it's currently not only possible to set the local port the patkaka listens on - you cannot set the external port the invite code will use
 If this external port is different you can manually edit the port invite code.
 
+NOTE: see `pataka` and `ssb-pataka` for configuration options for other features, like web-registration form
+
 ## :warning: WARNING
 
 This module currently exposes an admin web page **without authentication**. It allows:
 - setting the name of the pataka
 - generating single-use invites for the pataka
+
+If you do not set `config.pataka.webPort` then this service will not be started up
 
 ## TODO
 
@@ -88,11 +92,9 @@ $ npm run dev
 
 To update the dependencies to be in line with `pataka`
 ```bash
-$ cd ~/projects/pataka
-$ npm link pataka
-$ cd ~/projects/pataka-cli
 $ npm run syncDeps
 ```
+_(Assumes `pataka` and `pataka-cli` are in same folder)_
 
 To update the UI to be in line with `pataka`
 ```bash
